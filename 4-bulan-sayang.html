@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy 4 Bulan</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #1d2340;
+    --night2: #2c3563;
+    --paper: #fff4e6;
+    --ink: #3b2f4a;
+    --rose: #ff8fa3;
+    --gold: #ffd479;
+  }
+  * { box-sizing: border-box; }
+  html, body { min-height: 100%; margin: 0; }
+  body {
+    font-family: "Nunito", system-ui, sans-serif; color: #fff;
+    background: linear-gradient(180deg, var(--night), var(--night2));
+    display: grid; place-items: center; padding: 20px; overflow-x: hidden;
+  }
+  #stars { position: fixed; inset: 0; pointer-events: none; }
+  .star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--gold); animation: tw 3s ease-in-out infinite; }
+  @keyframes tw { 50% { opacity: .15; } }
+  main { position: relative; width: min(460px, 100%); text-align: center; }
+  h1 { font-family: "Caveat", cursive; font-size: 2.6rem; margin: 0 0 4px; }
+  .hint { opacity: .8; margin: 0 0 20px; }
+
+  #kado {
+    font-size: 6rem; background: none; border: 0; cursor: pointer; display: block; margin: 0 auto;
+    animation: goyang 2s ease-in-out infinite;
+  }
+  @keyframes goyang { 0%, 100% { transform: rotate(0); } 10%, 30% { transform: rotate(-8deg); } 20%, 40% { transform: rotate(8deg); } 50% { transform: rotate(0); } }
+
+  #surat { display: none; background: var(--paper); color: var(--ink); border-radius: 14px; padding: 26px 22px; text-align: left; box-shadow: 0 14px 40px rgba(0,0,0,.4); animation: buka .6s ease-out; }
+  @keyframes buka { from { transform: translateY(30px) scale(.9); opacity: 0; } }
+  #surat h2 { font-family: "Caveat", cursive; font-size: 2rem; margin: 0 0 8px; }
+  #surat p { line-height: 1.7; margin: 0 0 12px; }
+  .ttd { font-family: "Caveat", cursive; font-size: 1.6rem; text-align: right; margin: 0; }
+
+  .besar { text-align: center; margin: 6px 0 14px; }
+  .besar b { display: block; font-family: "Caveat", cursive; font-size: 4.2rem; line-height: 1; color: #d6456a; }
+  .angka { display: flex; gap: 8px; margin-bottom: 16px; }
+  .angka div { flex: 1; background: #ffe1e7; border-radius: 12px; padding: 8px 4px; text-align: center; font-size: .85rem; }
+  .angka strong { display: block; font-size: 1.3rem; color: #d6456a; }
+
+  .garis { list-style: none; margin: 0 0 16px; padding: 0 0 0 18px; border-left: 3px solid var(--rose); }
+  .garis li { position: relative; margin-bottom: 12px; line-height: 1.5; }
+  .garis li::before { content: ""; position: absolute; left: -25px; top: 6px; width: 11px; height: 11px; border-radius: 50%; background: var(--rose); border: 2px solid var(--paper); }
+  .garis strong { display: block; color: #d6456a; }
+
+  .alasan { min-height: 3.4em; background: #fff; border: 2px dashed var(--rose); border-radius: 12px; padding: 10px 12px; margin: 10px 0; text-align: center; }
+  button.btn {
+    font: inherit; font-weight: 700; cursor: pointer; border: 0; border-radius: 999px;
+    padding: 10px 22px; background: var(--rose); color: #4a1d2b; transition: transform .1s;
+  }
+  button.btn:hover { transform: scale(1.05); }
+  button.btn:active { transform: scale(.95); }
+  button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+  .tanya { margin-top: 18px; text-align: center; min-height: 90px; }
+  .tanya p { font-weight: 700; margin: 0 0 10px; }
+  #tidak { background: #d9d4e6; position: relative; margin-left: 8px; }
+  #jawab { display: none; font-family: "Caveat", cursive; font-size: 2rem; margin-top: 10px; }
+  .hati { position: fixed; bottom: -30px; font-size: 1.6rem; pointer-events: none; animation: naik 4s linear forwards; }
+  @keyframes naik { to { transform: translateY(-110vh) rotate(20deg); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .star, .hati, #surat, #kado { animation: none; } }
+</style>
+</head>
+<body>
+  <div id="stars"></div>
+  <main>
+    <h1 id="judul">Ada kado kecil buat kamu</h1>
+    <p class="hint" id="hint">Klik kadonya ya</p>
+    <button id="kado" aria-label="Buka kado">🎁</button>
+
+    <section id="surat">
+      <h2 id="sapa"></h2>
+      <div class="besar"><b>4 bulan</b>kita jalan bareng</div>
+      <div class="angka">
+        <div><strong id="hari">0</strong>hari</div>
+        <div><strong id="minggu">0</strong>minggu</div>
+        <div><strong id="jam">0</strong>jam</div>
+      </div>
+      <p id="isi"></p>
+
+      <ul class="garis" id="garis"></ul>
+
+      <div class="alasan" id="alasan">Klik tombol di bawah buat baca alasannya 💛</div>
+      <div style="text-align:center"><button class="btn" id="btnAlasan">Kenapa aku masih sayang kamu?</button></div>
+
+      <div class="tanya">
+        <p>Lanjut ke bulan ke-5, ke-6, dan seterusnya?</p>
+        <button class="btn" id="ya">Lanjut dong 💖</button>
+        <button class="btn" id="tidak">Nggak</button>
+        <div id="jawab">Yeay! Aku sayang kamu 🥰</div>
+      </div>
+      <p class="ttd" id="ttd"></p>
+    </section>
+  </main>
+
+<script>
+  /* ====== UBAH DI SINI ====== */
+  const NAMA_DIA   = "sayanggg";
+  const NAMA_KAMU  = "aku";
+  const TGL_JADIAN = "2026-05-30";   // format: TAHUN-BULAN-TANGGAL
+  const ISI_SURAT  = "4 bulan itu kaya nya sebentar, tapi aku rasanya udah kenal kamu lama banget. makasii yaa udah sabar, udah mau selalu dengerin, dan udah bikin hari hariku lebih ringan. ini cuma hadiah kecil dari aku, semoga kamu sukaa.";
+  const KENANGAN = [
+    ["Bulan 1", "masih malu malu kaya miong."],
+    ["Bulan 2", "udahh nyaman banget, mulai tau juga kebiasaan masing masing."],
+    ["Bulan 3", "momen paling seru dann lucu tapi banyak berantem jugaa yang kita lewati bareng."],
+    ["Bulan 4", "sampai hari ini masih sama sayangg dan aku senang banget."]
+  ];
+  const ALASAN = [
+    "kamu bikin aku happy.",
+    "kamu sabar banget ngadepin aku.",
+    "sering bikin aku ketawa.",
+    "bikin aku ngerasa aman.",
+    "kamu apa adanya dan itu yang aku suka.",
+    "POKOKNYAA SAYANGGG BANGETT."
+  ];
+  /* ========================== */
+
+  const $ = id => document.getElementById(id);
+  $("sapa").textContent = "Selamat 4 bulan!!, " + NAMA_DIA + " 💙";
+  $("isi").textContent = "makasi sayang sampe hari ini sayang masih mau sabar sama sikap aku masih bertahan sama aku, aku sayang banget sama sayang, iloveuuu bbyy";
+  $("ttd").textContent = "- " + "pacar Lindan";
+  $("garis").innerHTML = KENANGAN.map(k => "<li><strong>" + k[0] + "</strong>" + k[1] + "</li>").join("");
+
+  const bg = $("stars");
+  for (let i = 0; i < 50; i++) {
+    const s = document.createElement("div");
+    s.className = "star";
+    s.style.left = Math.random() * 100 + "%";
+    s.style.top = Math.random() * 100 + "%";
+    s.style.animationDelay = Math.random() * 3 + "s";
+    bg.appendChild(s);
+  }
+
+  $("kado").addEventListener("click", () => {
+    $("kado").style.display = "none";
+    $("hint").style.display = "none";
+    $("judul").textContent = "Happy 4 Bulan!";
+    $("surat").style.display = "block";
+    const ms = Math.max(0, Date.now() - new Date(TGL_JADIAN));
+    const fmt = n => Math.floor(n).toLocaleString("id-ID");
+    $("hari").textContent = fmt(ms / 86400000);
+    $("minggu").textContent = fmt(ms / 604800000);
+    $("jam").textContent = fmt(ms / 3600000);
+  });
+
+  let n = 0;
+  $("btnAlasan").addEventListener("click", () => {
+    $("alasan").textContent = ALASAN[n % ALASAN.length];
+    n++;
+  });
+
+  const tidak = $("tidak");
+  function kabur() {
+    tidak.style.left = (Math.random() * 120 - 60) + "px";
+    tidak.style.top = (Math.random() * 50 - 25) + "px";
+  }
+  tidak.addEventListener("mouseover", kabur);
+  tidak.addEventListener("click", kabur);
+  tidak.addEventListener("touchstart", e => { e.preventDefault(); kabur(); });
+
+  $("ya").addEventListener("click", () => {
+    $("jawab").style.display = "block";
+    tidak.style.display = "none";
+    for (let i = 0; i < 25; i++) {
+      setTimeout(() => {
+        const h = document.createElement("span");
+        h.className = "hati";
+        h.textContent = ["💖", "💙", "💛", "✨"][Math.floor(Math.random() * 4)];
+        h.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 4000);
+      }, i * 120);
+    }
+  });
+</script>
+</body>
+</html>
